@@ -10,6 +10,13 @@ const formStatus = document.getElementById("formStatus");
 const rsvpContent = document.getElementById("rsvpContent");
 const rsvpSuccess = document.getElementById("rsvpSuccess");
 const rsvpSuccessText = document.getElementById("rsvpSuccessText");
+const formStartedAtField = document.getElementById("formStartedAt");
+const honeypotField = document.getElementById("guestWebsite");
+const MIN_FORM_COMPLETION_MS = 2500;
+
+if (formStartedAtField) {
+  formStartedAtField.value = String(Date.now());
+}
 
 if (SITE_CONFIG.musicUrl) {
   audioElement.src = SITE_CONFIG.musicUrl;
@@ -113,6 +120,20 @@ rsvpForm.addEventListener("submit", async (event) => {
   const selectedAttendance = rsvpForm.querySelector("input[name='attendance']:checked");
   const attendance = selectedAttendance ? selectedAttendance.value : "";
   const requestId = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  const formStartedAt = Number(formStartedAtField?.value || 0);
+  const fillDuration = formStartedAt ? Date.now() - formStartedAt : 0;
+
+  if (honeypotField?.value.trim()) {
+    formStatus.textContent = "Не удалось отправить ответ. Попробуйте еще раз чуть позже.";
+    formStatus.className = "form-status is-error";
+    return;
+  }
+
+  if (fillDuration > 0 && fillDuration < MIN_FORM_COMPLETION_MS) {
+    formStatus.textContent = "Пожалуйста, попробуйте отправить форму еще раз через пару секунд.";
+    formStatus.className = "form-status is-error";
+    return;
+  }
 
   if (!name || !attendance) {
     formStatus.textContent = "Пожалуйста, заполните имя и выберите вариант ответа.";
@@ -175,5 +196,9 @@ rsvpForm.addEventListener("submit", async (event) => {
   } finally {
     submitButton.disabled = false;
     submitButton.textContent = "Отправить ответ";
+
+    if (formStartedAtField) {
+      formStartedAtField.value = String(Date.now());
+    }
   }
 });

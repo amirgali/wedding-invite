@@ -184,6 +184,18 @@
 
           <div class="rsvp__content" id="rsvpContent">
             <form class="rsvp-form" id="rsvpForm">
+              <input type="hidden" id="formStartedAt" name="formStartedAt" value="" />
+              <label class="field field--trap" aria-hidden="true">
+                <span>Оставьте это поле пустым</span>
+                <input
+                  id="guestWebsite"
+                  name="website"
+                  type="text"
+                  tabindex="-1"
+                  autocomplete="off"
+                />
+              </label>
+
               <label class="field">
                 <span>Ваше имя</span>
                 <input

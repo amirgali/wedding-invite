@@ -685,6 +685,14 @@ main {
   color: #b24a34;
 }
 
+.field--trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 @media (max-width: 820px) {
   .page-shell {
     padding: 10px 10px 34px;
