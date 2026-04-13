@@ -1,5 +1,5 @@
 const SITE_CONFIG = {
-  formEndpoint: "",
+  formEndpoint: "https://script.google.com/macros/s/AKfycbz2L32kQj6Z993D00galU43E-3Uio_iTI_wGd-Fk5kXaPBUhbyNfMxPShx3auBAPx0G/exec",
   musicUrl: "assets/love-theme.mp3"
 };
 
