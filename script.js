@@ -1,6 +1,6 @@
 const SITE_CONFIG = {
   formEndpoint: "",
-  musicUrl: ""
+  musicUrl: "assets/love-theme.mp3"
 };
 
 const audioElement = document.getElementById("weddingAudio");
@@ -13,6 +13,21 @@ if (SITE_CONFIG.musicUrl) {
 } else {
   audioToggle.textContent = "Музыка скоро";
 }
+
+let attemptedAutoplay = false;
+
+const startAudio = async () => {
+  if (!SITE_CONFIG.musicUrl) {
+    return;
+  }
+
+  try {
+    await audioElement.play();
+    audioToggle.textContent = "Выключить музыку";
+  } catch (error) {
+    audioToggle.textContent = "Включить музыку";
+  }
+};
 
 audioToggle.addEventListener("click", async () => {
   if (!SITE_CONFIG.musicUrl) {
@@ -35,6 +50,21 @@ audioToggle.addEventListener("click", async () => {
 
   audioElement.pause();
   audioToggle.textContent = "Включить музыку";
+});
+
+["click", "touchstart", "scroll"].forEach((eventName) => {
+  window.addEventListener(
+    eventName,
+    async () => {
+      if (attemptedAutoplay || !audioElement.paused) {
+        return;
+      }
+
+      attemptedAutoplay = true;
+      await startAudio();
+    },
+    { once: true }
+  );
 });
 
 rsvpForm.addEventListener("submit", async (event) => {
