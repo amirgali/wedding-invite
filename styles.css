@@ -639,6 +639,10 @@ main {
   min-height: 28px;
 }
 
+.form-status:empty {
+  display: none;
+}
+
 .rsvp-success {
   max-width: 620px;
   margin: 6px auto 0;
