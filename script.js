@@ -13,10 +13,138 @@ const rsvpSuccessText = document.getElementById("rsvpSuccessText");
 const formStartedAtField = document.getElementById("formStartedAt");
 const honeypotField = document.getElementById("guestWebsite");
 const MIN_FORM_COMPLETION_MS = 2500;
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 if (formStartedAtField) {
   formStartedAtField.value = String(Date.now());
 }
+
+const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+const setupRevealAnimations = () => {
+  const revealTargets = [
+    ...document.querySelectorAll("main > .card"),
+    ...document.querySelectorAll(".grid-two > .card"),
+    ...document.querySelectorAll(".timeline__item"),
+    ...document.querySelectorAll(".rsvp__meta-card"),
+    ...document.querySelectorAll(".choice-card"),
+    ...document.querySelectorAll(".hero__content > *")
+  ];
+
+  const uniqueTargets = [...new Set(revealTargets)];
+
+  uniqueTargets.forEach((element, index) => {
+    element.classList.add("reveal-scroll");
+    element.style.setProperty("--reveal-delay", `${(index % 4) * 70}ms`);
+  });
+
+  if (prefersReducedMotion.matches) {
+    uniqueTargets.forEach((element) => {
+      element.classList.add("is-visible");
+    });
+    return;
+  }
+
+  if (!("IntersectionObserver" in window)) {
+    uniqueTargets.forEach((element) => {
+      element.classList.add("is-visible");
+    });
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.16,
+      rootMargin: "0px 0px -8% 0px"
+    }
+  );
+
+  uniqueTargets.forEach((element) => {
+    observer.observe(element);
+  });
+};
+
+const setupScrollEffects = () => {
+  if (prefersReducedMotion.matches) {
+    return;
+  }
+
+  const hero = document.querySelector(".hero");
+  const heroSun = document.querySelector(".hero__sun");
+  const heroPalmLeft = document.querySelector(".hero__palms--left");
+  const heroPalmRight = document.querySelector(".hero__palms--right");
+  const heroWave = document.querySelector(".hero__wave");
+  const photoCards = [...document.querySelectorAll(".card--photo")];
+  const rsvpSection = document.querySelector(".rsvp");
+
+  const updateScrollEffects = () => {
+    const viewportHeight = window.innerHeight || 1;
+    const viewportCenter = viewportHeight / 2;
+
+    if (hero && heroSun && heroPalmLeft && heroPalmRight && heroWave) {
+      const heroRect = hero.getBoundingClientRect();
+      const heroProgress = clamp((viewportCenter - (heroRect.top + heroRect.height / 2)) / viewportHeight, -1, 1);
+      const heroProximity = 1 - Math.abs(heroProgress);
+
+      heroSun.style.setProperty("--hero-sun-shift", `${heroProgress * -30}px`);
+      heroSun.style.setProperty("--hero-sun-scale", (1 + heroProximity * 0.1).toFixed(3));
+      heroPalmLeft.style.setProperty("--hero-left-shift", `${heroProgress * 26}px`);
+      heroPalmLeft.style.setProperty("--hero-left-scale", (1 + heroProximity * 0.05).toFixed(3));
+      heroPalmRight.style.setProperty("--hero-right-shift", `${heroProgress * -22}px`);
+      heroPalmRight.style.setProperty("--hero-right-scale", (1 + heroProximity * 0.04).toFixed(3));
+      heroWave.style.setProperty("--hero-wave-shift", `${heroProgress * 16}px`);
+    }
+
+    photoCards.forEach((card) => {
+      const rect = card.getBoundingClientRect();
+
+      if (rect.bottom < -80 || rect.top > viewportHeight + 80) {
+        return;
+      }
+
+      const progress = clamp((viewportCenter - (rect.top + rect.height / 2)) / viewportHeight, -1, 1);
+      const proximity = 1 - Math.abs(progress);
+      card.style.setProperty("--card-shift", `${progress * 24}px`);
+      card.style.setProperty("--card-scale", (1.03 + proximity * 0.05).toFixed(3));
+    });
+
+    if (rsvpSection) {
+      const rect = rsvpSection.getBoundingClientRect();
+      const progress = clamp((viewportCenter - (rect.top + rect.height / 2)) / viewportHeight, -1, 1);
+      const proximity = 1 - Math.abs(progress);
+      rsvpSection.style.setProperty("--rsvp-shift", `${progress * 20}px`);
+      rsvpSection.style.setProperty("--rsvp-scale", (1.02 + proximity * 0.035).toFixed(3));
+    }
+  };
+
+  let ticking = false;
+
+  const requestUpdate = () => {
+    if (ticking) {
+      return;
+    }
+
+    ticking = true;
+    window.requestAnimationFrame(() => {
+      updateScrollEffects();
+      ticking = false;
+    });
+  };
+
+  updateScrollEffects();
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", requestUpdate);
+};
 
 if (SITE_CONFIG.musicUrl) {
   audioElement.src = SITE_CONFIG.musicUrl;
@@ -43,6 +171,8 @@ const startAudio = async () => {
 };
 
 window.addEventListener("DOMContentLoaded", async () => {
+  setupRevealAnimations();
+  setupScrollEffects();
   await startAudio();
 });
 
