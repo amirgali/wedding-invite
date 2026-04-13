@@ -249,11 +249,104 @@ main {
 }
 
 .card {
+  position: relative;
+  overflow: hidden;
   padding: 32px 28px;
   border-radius: 30px;
   background: var(--card-bg);
   box-shadow: var(--card-shadow);
   backdrop-filter: blur(10px);
+}
+
+.card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.card--photo {
+  --card-image: none;
+  --card-overlay: linear-gradient(180deg, rgba(15, 40, 48, 0.42), rgba(15, 40, 48, 0.72));
+  background: rgba(19, 52, 62, 0.32);
+  min-height: 280px;
+}
+
+.card--photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    var(--card-overlay),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.06), transparent 52%),
+    var(--card-image) center / cover no-repeat;
+  transform: scale(1.02);
+}
+
+.card--photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 30%, rgba(6, 29, 39, 0.1));
+}
+
+.card--photo h2,
+.card--photo h3,
+.card--photo p,
+.card--photo .section-kicker {
+  color: #fff;
+  text-shadow: 0 8px 24px rgba(7, 31, 39, 0.28);
+}
+
+.card--photo p,
+.card--photo small,
+.card--photo span {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.card--photo .section-kicker {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.card--photo .link-chip {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.card--photo .timeline__time {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+}
+
+.card--invite {
+  --card-image: url("assets/cards/invite-bg.jpg");
+  --card-overlay: linear-gradient(180deg, rgba(46, 34, 92, 0.34), rgba(25, 28, 66, 0.7));
+}
+
+.card--date {
+  --card-image: url("assets/cards/date-bg.jpg");
+  --card-overlay: linear-gradient(180deg, rgba(90, 42, 11, 0.22), rgba(74, 42, 18, 0.62));
+}
+
+.card--location {
+  --card-image: url("assets/cards/location-bg.jpg");
+  --card-overlay: linear-gradient(180deg, rgba(17, 77, 99, 0.26), rgba(8, 56, 74, 0.62));
+}
+
+.card--timeline {
+  --card-image: url("assets/cards/timeline-bg.jpg");
+  --card-overlay: linear-gradient(180deg, rgba(72, 44, 33, 0.28), rgba(27, 48, 70, 0.72));
+}
+
+.card--dress {
+  --card-image: url("assets/cards/dress-bg.jpg");
+  --card-overlay: linear-gradient(180deg, rgba(15, 82, 96, 0.22), rgba(17, 66, 77, 0.6));
+}
+
+.card--stay {
+  --card-image: url("assets/cards/stay-bg.jpg");
+  --card-overlay: linear-gradient(180deg, rgba(13, 44, 56, 0.28), rgba(10, 36, 47, 0.7));
 }
 
 .intro {
@@ -540,6 +633,10 @@ main {
     padding-inline: 24px;
     text-align: left;
   }
+
+  .card--photo {
+    min-height: 240px;
+  }
 }
 
 @media (max-width: 540px) {
@@ -558,6 +655,10 @@ main {
   .card {
     padding: 24px 18px;
     border-radius: 22px;
+  }
+
+  .card--photo {
+    min-height: 220px;
   }
 
   .hero__wave {
