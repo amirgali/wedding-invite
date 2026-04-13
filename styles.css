@@ -418,7 +418,43 @@ main {
 }
 
 .rsvp {
+  position: relative;
+  isolation: isolate;
   text-align: center;
+  padding-left: 220px;
+  padding-right: 220px;
+}
+
+.rsvp::before,
+.rsvp::after {
+  content: "";
+  position: absolute;
+  top: 34px;
+  bottom: 34px;
+  width: 165px;
+  border-radius: 30px;
+  z-index: 0;
+  pointer-events: none;
+  background-color: rgba(255, 250, 244, 0.24);
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+.rsvp::before {
+  left: 28px;
+  background-image:
+    linear-gradient(180deg, rgba(255, 247, 241, 0.7), rgba(255, 247, 241, 0.78)),
+    url("assets/rsvp/couple-left.jpg");
+  background-position: center center;
+}
+
+.rsvp::after {
+  right: 28px;
+  background-image:
+    linear-gradient(180deg, rgba(255, 247, 241, 0.7), rgba(255, 247, 241, 0.78)),
+    url("assets/rsvp/couple-right.jpg");
+  background-position: center center;
 }
 
 .rsvp__lead {
@@ -430,7 +466,7 @@ main {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
-  max-width: 860px;
+  max-width: 720px;
   margin: 0 auto 24px;
 }
 
@@ -663,6 +699,16 @@ main {
     grid-template-columns: 1fr;
   }
 
+  .rsvp {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+  .rsvp::before,
+  .rsvp::after {
+    display: none;
+  }
+
   .hero__palms {
     width: 180px;
     height: 240px;
@@ -698,6 +744,11 @@ main {
 
   .card--photo {
     min-height: 220px;
+  }
+
+  .rsvp {
+    padding-left: 18px;
+    padding-right: 18px;
   }
 
   .hero__wave {
