@@ -145,6 +145,20 @@
             Пожалуйста, заполните короткую форму, чтобы мы могли спланировать
             наш день и позаботиться о каждом госте.
           </p>
+          <div class="rsvp__meta">
+            <div class="rsvp__meta-card">
+              <strong>20 секунд</strong>
+              <span>столько займет ответ</span>
+            </div>
+            <div class="rsvp__meta-card">
+              <strong>Google Sheets</strong>
+              <span>ответы будут собраны в таблицу</span>
+            </div>
+            <div class="rsvp__meta-card">
+              <strong>До 1 мая</strong>
+              <span>очень просим ответить заранее</span>
+            </div>
+          </div>
 
           <form class="rsvp-form" id="rsvpForm">
             <label class="field">
@@ -158,24 +172,43 @@
               />
             </label>
 
-            <label class="field">
-              <span>Придете на свадьбу?</span>
-              <select id="guestResponse" name="attendance" required>
-                <option value="" selected disabled>Выберите вариант</option>
-                <option value="Приду">Приду</option>
-                <option value="Приду с парой">Приду с парой</option>
-                <option value="К сожалению, не смогу участвовать">
-                  К сожалению, не смогу участвовать
-                </option>
-              </select>
-            </label>
+            <fieldset class="choice-group">
+              <legend>Придете на свадьбу?</legend>
+              <label class="choice-card">
+                <input type="radio" name="attendance" value="Приду" required />
+                <span class="choice-card__content">
+                  <strong>Приду</strong>
+                  <small>Буду с вами в этот день</small>
+                </span>
+              </label>
+
+              <label class="choice-card">
+                <input type="radio" name="attendance" value="Приду с парой" />
+                <span class="choice-card__content">
+                  <strong>Приду с парой</strong>
+                  <small>Буду не один или не одна</small>
+                </span>
+              </label>
+
+              <label class="choice-card">
+                <input
+                  type="radio"
+                  name="attendance"
+                  value="К сожалению, не смогу участвовать"
+                />
+                <span class="choice-card__content">
+                  <strong>Не смогу</strong>
+                  <small>К сожалению, не получится приехать</small>
+                </span>
+              </label>
+            </fieldset>
 
             <button class="button" type="submit">Отправить ответ</button>
           </form>
 
           <p class="form-status" id="formStatus" role="status">
-            Форма почти готова. Для реальной отправки в Google Sheets останется
-            подключить веб-адрес Google Apps Script.
+            Форма готова. Для живой отправки в Google Sheets останется
+            вставить адрес опубликованного Google Apps Script.
           </p>
         </section>
       </main>

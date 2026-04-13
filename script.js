@@ -72,7 +72,9 @@ rsvpForm.addEventListener("submit", async (event) => {
 
   const submitButton = rsvpForm.querySelector("button[type='submit']");
   const name = document.getElementById("guestName").value.trim();
-  const attendance = document.getElementById("guestResponse").value;
+  const selectedAttendance = rsvpForm.querySelector("input[name='attendance']:checked");
+  const attendance = selectedAttendance ? selectedAttendance.value : "";
+  const requestId = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
 
   if (!name || !attendance) {
     formStatus.textContent = "Пожалуйста, заполните имя и выберите вариант ответа.";
@@ -87,12 +89,14 @@ rsvpForm.addEventListener("submit", async (event) => {
     return;
   }
 
-  const payload = {
+  const payload = new URLSearchParams({
     name,
     attendance,
-    source: window.location.href,
-    sentAt: new Date().toISOString()
-  };
+    referer: window.location.href,
+    formid: "samui-rsvp-form",
+    sent: new Date().toISOString(),
+    requestid: requestId
+  });
 
   submitButton.disabled = true;
   submitButton.textContent = "Отправляем...";
@@ -102,11 +106,11 @@ rsvpForm.addEventListener("submit", async (event) => {
   try {
     await fetch(SITE_CONFIG.formEndpoint, {
       method: "POST",
-      mode: "cors",
+      mode: "no-cors",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
       },
-      body: JSON.stringify(payload)
+      body: payload.toString()
     });
 
     rsvpForm.reset();
@@ -114,7 +118,7 @@ rsvpForm.addEventListener("submit", async (event) => {
     formStatus.className = "form-status is-success";
   } catch (error) {
     formStatus.textContent =
-      "Не получилось отправить форму. Проверьте URL Google Apps Script и права доступа.";
+      "Не получилось отправить форму. Проверьте URL Google Apps Script и доступ к веб-приложению.";
     formStatus.className = "form-status is-error";
   } finally {
     submitButton.disabled = false;
