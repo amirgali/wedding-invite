@@ -329,6 +329,10 @@ main {
   margin: 0 auto;
 }
 
+.rsvp__content.is-hidden {
+  display: none;
+}
+
 .field {
   display: grid;
   gap: 8px;
@@ -461,6 +465,40 @@ main {
 .form-status {
   margin-top: 16px;
   min-height: 28px;
+}
+
+.rsvp-success {
+  max-width: 620px;
+  margin: 6px auto 0;
+  padding: 30px 24px;
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(232, 250, 244, 0.92));
+  box-shadow: 0 20px 38px rgba(32, 121, 95, 0.12);
+}
+
+.rsvp-success__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(23, 121, 95, 0.12);
+  color: #17795f;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.rsvp-success h3 {
+  margin-top: 16px;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.rsvp-success p {
+  max-width: 480px;
+  margin: 0 auto;
 }
 
 .form-status.is-success {

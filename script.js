@@ -7,6 +7,9 @@ const audioElement = document.getElementById("weddingAudio");
 const audioToggle = document.getElementById("audioToggle");
 const rsvpForm = document.getElementById("rsvpForm");
 const formStatus = document.getElementById("formStatus");
+const rsvpContent = document.getElementById("rsvpContent");
+const rsvpSuccess = document.getElementById("rsvpSuccess");
+const rsvpSuccessText = document.getElementById("rsvpSuccessText");
 
 if (SITE_CONFIG.musicUrl) {
   audioElement.src = SITE_CONFIG.musicUrl;
@@ -119,8 +122,22 @@ rsvpForm.addEventListener("submit", async (event) => {
     });
 
     rsvpForm.reset();
-    formStatus.textContent = "Спасибо, ваш ответ сохранен.";
-    formStatus.className = "form-status is-success";
+    rsvpContent.classList.add("is-hidden");
+    rsvpSuccess.hidden = false;
+
+    if (attendance === "Приду") {
+      rsvpSuccessText.textContent =
+        "Мы получили ваш ответ и будем очень рады разделить этот день вместе с вами.";
+    } else if (attendance === "Приду с парой") {
+      rsvpSuccessText.textContent =
+        "Мы получили ваш ответ и будем счастливы видеть вас на нашем празднике вместе с парой.";
+    } else {
+      rsvpSuccessText.textContent =
+        "Мы получили ваш ответ. Нам будет вас не хватать, но спасибо, что дали знать заранее.";
+    }
+
+    formStatus.textContent = "";
+    formStatus.className = "form-status";
   } catch (error) {
     formStatus.textContent =
       "Не получилось отправить форму. Проверьте URL Google Apps Script и доступ к веб-приложению.";

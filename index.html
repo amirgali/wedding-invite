@@ -173,56 +173,67 @@
             </div>
           </div>
 
-          <form class="rsvp-form" id="rsvpForm">
-            <label class="field">
-              <span>Ваше имя</span>
-              <input
-                id="guestName"
-                name="name"
-                type="text"
-                placeholder="Например, Алия"
-                required
-              />
-            </label>
-
-            <fieldset class="choice-group">
-              <legend>Придете на свадьбу?</legend>
-              <label class="choice-card">
-                <input type="radio" name="attendance" value="Приду" required />
-                <span class="choice-card__content">
-                  <strong>Приду</strong>
-                  <small>Буду с вами в этот день</small>
-                </span>
-              </label>
-
-              <label class="choice-card">
-                <input type="radio" name="attendance" value="Приду с парой" />
-                <span class="choice-card__content">
-                  <strong>Приду с парой</strong>
-                  <small>Буду не один или не одна</small>
-                </span>
-              </label>
-
-              <label class="choice-card">
+          <div class="rsvp__content" id="rsvpContent">
+            <form class="rsvp-form" id="rsvpForm">
+              <label class="field">
+                <span>Ваше имя</span>
                 <input
-                  type="radio"
-                  name="attendance"
-                  value="К сожалению, не смогу участвовать"
+                  id="guestName"
+                  name="name"
+                  type="text"
+                  placeholder="Например, Алия"
+                  required
                 />
-                <span class="choice-card__content">
-                  <strong>Не смогу</strong>
-                  <small>К сожалению, не получится приехать</small>
-                </span>
               </label>
-            </fieldset>
 
-            <button class="button" type="submit">Отправить ответ</button>
-          </form>
+              <fieldset class="choice-group">
+                <legend>Придете на свадьбу?</legend>
+                <label class="choice-card">
+                  <input type="radio" name="attendance" value="Приду" required />
+                  <span class="choice-card__content">
+                    <strong>Приду</strong>
+                    <small>Буду с вами в этот день</small>
+                  </span>
+                </label>
 
-          <p class="form-status" id="formStatus" role="status">
-            Форма готова. Для живой отправки в Google Sheets останется
-            вставить адрес опубликованного Google Apps Script.
-          </p>
+                <label class="choice-card">
+                  <input type="radio" name="attendance" value="Приду с парой" />
+                  <span class="choice-card__content">
+                    <strong>Приду с парой</strong>
+                    <small>Буду не один или не одна</small>
+                  </span>
+                </label>
+
+                <label class="choice-card">
+                  <input
+                    type="radio"
+                    name="attendance"
+                    value="К сожалению, не смогу участвовать"
+                  />
+                  <span class="choice-card__content">
+                    <strong>Не смогу</strong>
+                    <small>К сожалению, не получится приехать</small>
+                  </span>
+                </label>
+              </fieldset>
+
+              <button class="button" type="submit">Отправить ответ</button>
+            </form>
+
+            <p class="form-status" id="formStatus" role="status">
+              Форма готова. Для живой отправки в Google Sheets останется
+              вставить адрес опубликованного Google Apps Script.
+            </p>
+          </div>
+
+          <div class="rsvp-success" id="rsvpSuccess" hidden>
+            <div class="rsvp-success__badge">Ответ сохранен</div>
+            <h3>Спасибо, что ответили</h3>
+            <p id="rsvpSuccessText">
+              Мы получили ваш ответ и будем очень рады разделить этот день
+              вместе с вами.
+            </p>
+          </div>
         </section>
       </main>
     </div>
