@@ -39,6 +39,22 @@ window.addEventListener("DOMContentLoaded", async () => {
   await startAudio();
 });
 
+window.addEventListener("load", async () => {
+  if (!audioElement.paused) {
+    return;
+  }
+
+  await startAudio();
+});
+
+audioElement.addEventListener("canplay", async () => {
+  if (!audioElement.paused) {
+    return;
+  }
+
+  await startAudio();
+});
+
 audioToggle.addEventListener("click", async () => {
   if (!SITE_CONFIG.musicUrl) {
     formStatus.textContent =
