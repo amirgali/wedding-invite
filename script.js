@@ -10,6 +10,7 @@ const formStatus = document.getElementById("formStatus");
 
 if (SITE_CONFIG.musicUrl) {
   audioElement.src = SITE_CONFIG.musicUrl;
+  audioElement.autoplay = true;
 } else {
   audioToggle.textContent = "Музыка скоро";
 }
@@ -28,6 +29,10 @@ const startAudio = async () => {
     audioToggle.textContent = "Включить музыку";
   }
 };
+
+window.addEventListener("DOMContentLoaded", async () => {
+  await startAudio();
+});
 
 audioToggle.addEventListener("click", async () => {
   if (!SITE_CONFIG.musicUrl) {

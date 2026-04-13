@@ -210,6 +210,7 @@ p {
 }
 
 .hero__meta span,
+.hero__meta a,
 .link-chip {
   display: inline-flex;
   align-items: center;
@@ -220,21 +221,6 @@ p {
   background: rgba(255, 255, 255, 0.62);
   backdrop-filter: blur(10px);
   color: var(--text);
-  font-weight: 600;
-}
-
-.hero__location-tag {
-  position: absolute;
-  right: 24px;
-  bottom: 165px;
-  z-index: 2;
-  padding: 10px 16px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  backdrop-filter: blur(10px);
-  color: #fff;
-  font-size: 0.94rem;
   font-weight: 600;
 }
 
@@ -510,13 +496,6 @@ main {
   .hero__palms {
     width: 180px;
     height: 240px;
-  }
-
-  .hero__location-tag {
-    right: 16px;
-    left: 16px;
-    bottom: 132px;
-    text-align: center;
   }
 
   .intro {
