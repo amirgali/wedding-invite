@@ -118,9 +118,11 @@ a {
 }
 
 .audio-toggle {
-  position: relative;
-  z-index: 2;
-  margin-left: auto;
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 40;
+  margin-left: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -133,6 +135,43 @@ a {
   cursor: pointer;
   backdrop-filter: blur(10px);
   box-shadow: 0 16px 35px rgba(9, 46, 61, 0.18);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.audio-toggle--vinyl {
+  width: 84px;
+  min-width: 84px;
+  height: 84px;
+  min-height: 84px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 42px rgba(7, 29, 38, 0.22);
+  overflow: hidden;
+}
+
+.audio-toggle__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: vinyl-spin 4.4s linear infinite;
+  animation-play-state: paused;
+}
+
+.audio-toggle.is-playing .audio-toggle__image {
+  animation-play-state: running;
+}
+
+@keyframes vinyl-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .hero__content {
@@ -667,7 +706,15 @@ main {
   }
 
   .audio-toggle {
-    width: 100%;
+    top: 12px;
+    left: 12px;
+  }
+
+  .audio-toggle--vinyl {
+    width: 68px;
+    min-width: 68px;
+    height: 68px;
+    min-height: 68px;
   }
 
   .hero {

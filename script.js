@@ -15,7 +15,7 @@ if (SITE_CONFIG.musicUrl) {
   audioElement.src = SITE_CONFIG.musicUrl;
   audioElement.autoplay = true;
 } else {
-  audioToggle.textContent = "Музыка скоро";
+  audioToggle.setAttribute("aria-label", "Музыка скоро будет доступна");
 }
 
 let attemptedAutoplay = false;
@@ -27,9 +27,11 @@ const startAudio = async () => {
 
   try {
     await audioElement.play();
-    audioToggle.textContent = "Выключить музыку";
+    audioToggle.classList.add("is-playing");
+    audioToggle.setAttribute("aria-label", "Выключить музыку");
   } catch (error) {
-    audioToggle.textContent = "Включить музыку";
+    audioToggle.classList.remove("is-playing");
+    audioToggle.setAttribute("aria-label", "Включить музыку");
   }
 };
 
@@ -48,7 +50,8 @@ audioToggle.addEventListener("click", async () => {
   if (audioElement.paused) {
     try {
       await audioElement.play();
-      audioToggle.textContent = "Выключить музыку";
+      audioToggle.classList.add("is-playing");
+      audioToggle.setAttribute("aria-label", "Выключить музыку");
     } catch (error) {
       formStatus.textContent = "Браузер не дал включить музыку автоматически.";
       formStatus.className = "form-status is-error";
@@ -57,7 +60,8 @@ audioToggle.addEventListener("click", async () => {
   }
 
   audioElement.pause();
-  audioToggle.textContent = "Включить музыку";
+  audioToggle.classList.remove("is-playing");
+  audioToggle.setAttribute("aria-label", "Включить музыку");
 });
 
 ["click", "touchstart", "scroll"].forEach((eventName) => {
@@ -73,6 +77,16 @@ audioToggle.addEventListener("click", async () => {
     },
     { once: true }
   );
+});
+
+audioElement.addEventListener("play", () => {
+  audioToggle.classList.add("is-playing");
+  audioToggle.setAttribute("aria-label", "Выключить музыку");
+});
+
+audioElement.addEventListener("pause", () => {
+  audioToggle.classList.remove("is-playing");
+  audioToggle.setAttribute("aria-label", "Включить музыку");
 });
 
 rsvpForm.addEventListener("submit", async (event) => {
